@@ -1,0 +1,15 @@
+one:
+  proveedor: one
+  nombre: Filtro de aceite
+  marca: Fram
+  modelo_compatible: Corolla
+  precio: 200.0
+  stock: 10
+
+two:
+  proveedor: two
+  nombre: Pastillas de freno
+  marca: Bendix
+  modelo_compatible: Fiesta
+  precio: 800.0
+  stock: 5

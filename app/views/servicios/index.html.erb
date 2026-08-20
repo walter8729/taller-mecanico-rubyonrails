@@ -1,0 +1,33 @@
+<% content_for :title, "Servicios" %>
+
+<h1>Servicios</h1>
+
+<div class="acciones">
+  <%= link_to "Nuevo servicio", new_servicio_path, class: "btn btn-acento" %>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Precio base</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @servicios.each do |servicio| %>
+      <tr>
+        <td><%= link_to servicio.nombre, servicio %></td>
+        <td><%= servicio.descripcion %></td>
+        <td><%= number_to_currency(servicio.precio_base) %></td>
+        <td><%= badge_estado(servicio.estado) %></td>
+        <td class="acciones">
+          <%= link_to "Editar", edit_servicio_path(servicio), class: "btn btn-sm btn-secondary" %>
+          <%= button_to "Eliminar", servicio, method: :delete, class: "btn btn-sm btn-peligro", form: { style: "display:inline" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

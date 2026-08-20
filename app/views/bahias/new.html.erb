@@ -1,0 +1,9 @@
+<% content_for :title, "Nueva bahía" %>
+
+<h1>Nueva bahía</h1>
+
+<%= render "form", bahia: @bahia %>
+
+<div>
+  <%= link_to "Volver", bahias_path, class: "btn btn-secondary" %>
+</div>

@@ -1,0 +1,9 @@
+<% content_for :title, "Editar cliente" %>
+
+<h1>Editar cliente</h1>
+
+<%= render "form", cliente: @cliente %>
+
+<div>
+  <%= link_to "Volver", clientes_path, class: "btn btn-secondary" %>
+</div>

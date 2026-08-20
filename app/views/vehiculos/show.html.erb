@@ -1,0 +1,19 @@
+<% content_for :title, "Vehículo" %>
+
+<h1><%= @vehiculo.descripcion %></h1>
+
+<div class="card">
+  <p><strong>Cliente:</strong> <%= @vehiculo.cliente&.nombre_completo %></p>
+  <p><strong>Placa:</strong> <%= @vehiculo.placa %></p>
+  <p><strong>Marca:</strong> <%= @vehiculo.marca %></p>
+  <p><strong>Modelo:</strong> <%= @vehiculo.modelo %></p>
+  <p><strong>Año:</strong> <%= @vehiculo.anio %></p>
+  <p><strong>Color:</strong> <%= @vehiculo.color %></p>
+  <p><strong>Kilometraje:</strong> <%= @vehiculo.kilometraje %></p>
+  <p><strong>Estado:</strong> <%= badge_estado(@vehiculo.estado) %></p>
+</div>
+
+<div class="acciones">
+  <%= link_to "Editar", edit_vehiculo_path(@vehiculo), class: "btn" %>
+  <%= link_to "Volver", vehiculos_path, class: "btn btn-secondary" %>
+</div>

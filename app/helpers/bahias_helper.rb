@@ -1,0 +1,2 @@
+module BahiasHelper
+end

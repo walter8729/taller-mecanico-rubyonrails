@@ -1,0 +1,15 @@
+<% content_for :title, "Servicio" %>
+
+<h1><%= @servicio.nombre %></h1>
+
+<div class="card">
+  <p><strong>Nombre:</strong> <%= @servicio.nombre %></p>
+  <p><strong>Descripción:</strong> <%= @servicio.descripcion %></p>
+  <p><strong>Precio base:</strong> <%= number_to_currency(@servicio.precio_base) %></p>
+  <p><strong>Estado:</strong> <%= badge_estado(@servicio.estado) %></p>
+</div>
+
+<div class="acciones">
+  <%= link_to "Editar", edit_servicio_path(@servicio), class: "btn" %>
+  <%= link_to "Volver", servicios_path, class: "btn btn-secondary" %>
+</div>

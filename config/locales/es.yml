@@ -1,0 +1,58 @@
+es:
+  activerecord:
+    errors:
+      messages:
+        blank: "no puede estar en blanco"
+        taken: "ya está en uso"
+        invalid: "no es válido"
+        inclusion: "no está incluido en la lista"
+        not_a_number: "no es un número"
+        greater_than_or_equal_to: "debe ser mayor o igual a %{count}"
+        less_than_or_equal_to: "debe ser menor o igual a %{count}"
+        greater_than: "debe ser mayor a %{count}"
+        less_than: "debe ser menor a %{count}"
+        too_short: "es demasiado corto (mínimo %{count} caracteres)"
+        too_long: "es demasiado largo (máximo %{count} caracteres)"
+        restricted_dependencies:
+          has_many: "no puede eliminarse porque existen registros asociados"
+        record_invalid: "La validación falló: %{errors}"
+        restrict_dependent_destroy:
+          has_many: "No se puede eliminar el registro porque existen %{record} asociados"
+          has_one: "No se puede eliminar el registro porque existe un %{record} asociado"
+    attributes:
+      user:
+        email_address: "Correo electrónico"
+        password: "Contraseña"
+        password_confirmation: "Confirmación de contraseña"
+        rol: "Rol"
+      user/rols:
+        admin: "Administrador"
+        recepcionista: "Recepcionista"
+        mecanico: "Mecánico"
+      session:
+        ip_address: "Dirección IP"
+        user_agent: "Navegador"
+  errors:
+    messages:
+      blank: "no puede estar en blanco"
+  helpers:
+    submit:
+      create: "Crear %{model}"
+      update: "Actualizar %{model}"
+    label:
+      user:
+        email_address: "Correo electrónico"
+        password: "Contraseña"
+        password_confirmation: "Confirmación de contraseña"
+  views:
+    pagination:
+      previous: "Anterior"
+      next: "Siguiente"
+  time:
+    formats:
+      default: "%d/%m/%Y %H:%M"
+      short: "%d/%m/%Y"
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d/%m/%Y"

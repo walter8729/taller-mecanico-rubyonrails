@@ -1,0 +1,11 @@
+one:
+  nombre: Repuestos SA
+  telefono: 55555555
+  correo: ventas@repuestos.com
+  direccion: Av. Principal 100
+
+two:
+  nombre: Autopartes LTDA
+  telefono: 66666666
+  correo: ventas@autopartes.com
+  direccion: Av. Secundaria 200

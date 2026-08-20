@@ -1,0 +1,16 @@
+<% content_for :title, "Proveedor" %>
+
+<h1><%= @proveedor.nombre %></h1>
+
+<div class="card">
+  <p><strong>Nombre:</strong> <%= @proveedor.nombre %></p>
+  <p><strong>Teléfono:</strong> <%= @proveedor.telefono %></p>
+  <p><strong>Correo:</strong> <%= @proveedor.correo %></p>
+  <p><strong>Dirección:</strong> <%= @proveedor.direccion %></p>
+  <p><strong>Estado:</strong> <%= badge_estado(@proveedor.estado) %></p>
+</div>
+
+<div class="acciones">
+  <%= link_to "Editar", edit_proveedor_path(@proveedor), class: "btn" %>
+  <%= link_to "Volver", proveedores_path, class: "btn btn-secondary" %>
+</div>

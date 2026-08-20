@@ -1,0 +1,9 @@
+one:
+  orden_trabajo: one
+  mecanico: one
+  rol: encargado
+
+two:
+  orden_trabajo: two
+  mecanico: two
+  rol: ayudante

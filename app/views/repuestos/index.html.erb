@@ -1,0 +1,39 @@
+<% content_for :title, "Repuestos" %>
+
+<h1>Repuestos</h1>
+
+<div class="acciones">
+  <%= link_to "Nuevo repuesto", new_repuesto_path, class: "btn btn-acento" %>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Proveedor</th>
+      <th>Marca</th>
+      <th>Modelo compatible</th>
+      <th>Precio</th>
+      <th>Stock</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @repuestos.each do |repuesto| %>
+      <tr>
+        <td><%= link_to repuesto.nombre, repuesto %></td>
+        <td><%= repuesto.proveedor&.nombre %></td>
+        <td><%= repuesto.marca %></td>
+        <td><%= repuesto.modelo_compatible %></td>
+        <td><%= number_to_currency(repuesto.precio) %></td>
+        <td><%= repuesto.stock %></td>
+        <td><%= badge_estado(repuesto.estado) %></td>
+        <td class="acciones">
+          <%= link_to "Editar", edit_repuesto_path(repuesto), class: "btn btn-sm btn-secondary" %>
+          <%= button_to "Eliminar", repuesto, method: :delete, class: "btn btn-sm btn-peligro", form: { style: "display:inline" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

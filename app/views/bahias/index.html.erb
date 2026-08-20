@@ -1,0 +1,31 @@
+<% content_for :title, "Bahías" %>
+
+<h1>Bahías</h1>
+
+<div class="acciones">
+  <%= link_to "Nueva bahía", new_bahia_path, class: "btn btn-acento" %>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Número</th>
+      <th>Tipo</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @bahias.each do |bahia| %>
+      <tr>
+        <td><%= link_to bahia.numero, bahia %></td>
+        <td><%= bahia.tipo.humanize %></td>
+        <td><%= badge_estado(bahia.estado) %></td>
+        <td class="acciones">
+          <%= link_to "Editar", edit_bahia_path(bahia), class: "btn btn-sm btn-secondary" %>
+          <%= button_to "Eliminar", bahia, method: :delete, class: "btn btn-sm btn-peligro", form: { style: "display:inline" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

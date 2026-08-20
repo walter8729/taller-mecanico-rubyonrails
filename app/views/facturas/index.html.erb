@@ -1,0 +1,34 @@
+<% content_for :title, "Facturas" %>
+
+<h1>Facturas</h1>
+
+<div class="acciones">
+  <%= link_to "Nueva factura", new_factura_path, class: "btn btn-acento" %>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>N°</th>
+      <th>Cliente</th>
+      <th>Orden</th>
+      <th>Fecha</th>
+      <th>Monto total</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @facturas.each do |factura| %>
+      <tr>
+        <td><%= link_to factura.id, factura %></td>
+        <td><%= factura.cliente.nombre_completo %></td>
+        <td><%= link_to "OT N° #{factura.orden_trabajo_id}", factura.orden_trabajo %></td>
+        <td><%= l(factura.fecha) %></td>
+        <td><%= number_to_currency(factura.monto_total) %></td>
+        <td><%= badge_estado(factura.estado) %></td>
+        <td><%= link_to "Ver", factura, class: "btn btn-sm" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,15 @@
+<%= form_with(model: especialidad, class: "card") do |form| %>
+  <%= render "shared/errors", model: especialidad %>
+
+  <div class="field">
+    <%= form.label :nombre, "Nombre" %>
+    <%= form.text_field :nombre %>
+  </div>
+
+  <div class="field">
+    <%= form.label :descripcion, "Descripción" %>
+    <%= form.text_area :descripcion %>
+  </div>
+
+  <%= form.submit class: "btn" %>
+<% end %>

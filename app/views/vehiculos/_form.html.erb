@@ -1,0 +1,40 @@
+<%= form_with(model: vehiculo, class: "card") do |form| %>
+  <%= render "shared/errors", model: vehiculo %>
+
+  <div class="field">
+    <%= form.label :cliente_id, "Cliente" %>
+    <%= form.collection_select :cliente_id, Cliente.activos.order(:apellido), :id, :nombre_completo, { prompt: "Seleccione un cliente" } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :placa, "Placa" %>
+    <%= form.text_field :placa %>
+  </div>
+
+  <div class="field">
+    <%= form.label :marca, "Marca" %>
+    <%= form.text_field :marca %>
+  </div>
+
+  <div class="field">
+    <%= form.label :modelo, "Modelo" %>
+    <%= form.text_field :modelo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :anio, "Año" %>
+    <%= form.number_field :anio %>
+  </div>
+
+  <div class="field">
+    <%= form.label :color, "Color" %>
+    <%= form.text_field :color %>
+  </div>
+
+  <div class="field">
+    <%= form.label :kilometraje, "Kilometraje" %>
+    <%= form.number_field :kilometraje %>
+  </div>
+
+  <%= form.submit class: "btn" %>
+<% end %>

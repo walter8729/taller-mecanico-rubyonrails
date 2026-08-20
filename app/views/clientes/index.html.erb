@@ -1,0 +1,33 @@
+<% content_for :title, "Clientes" %>
+
+<h1>Clientes</h1>
+
+<div class="acciones">
+  <%= link_to "Nuevo cliente", new_cliente_path, class: "btn btn-acento" %>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Teléfono</th>
+      <th>Correo</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @clientes.each do |cliente| %>
+      <tr>
+        <td><%= link_to cliente.nombre_completo, cliente %></td>
+        <td><%= cliente.telefono %></td>
+        <td><%= cliente.correo %></td>
+        <td><%= badge_estado(cliente.estado) %></td>
+        <td class="acciones">
+          <%= link_to "Editar", edit_cliente_path(cliente), class: "btn btn-sm btn-secondary" %>
+          <%= button_to "Eliminar", cliente, method: :delete, class: "btn btn-sm btn-peligro", form: { style: "display:inline" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

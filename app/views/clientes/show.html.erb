@@ -1,0 +1,17 @@
+<% content_for :title, "Cliente" %>
+
+<h1><%= @cliente.nombre_completo %></h1>
+
+<div class="card">
+  <p><strong>Nombre:</strong> <%= @cliente.nombre %></p>
+  <p><strong>Apellido:</strong> <%= @cliente.apellido %></p>
+  <p><strong>Teléfono:</strong> <%= @cliente.telefono %></p>
+  <p><strong>Correo:</strong> <%= @cliente.correo %></p>
+  <p><strong>Dirección:</strong> <%= @cliente.direccion %></p>
+  <p><strong>Estado:</strong> <%= badge_estado(@cliente.estado) %></p>
+</div>
+
+<div class="acciones">
+  <%= link_to "Editar", edit_cliente_path(@cliente), class: "btn" %>
+  <%= link_to "Volver", clientes_path, class: "btn btn-secondary" %>
+</div>

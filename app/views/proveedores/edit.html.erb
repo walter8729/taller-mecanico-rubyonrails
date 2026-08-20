@@ -1,0 +1,9 @@
+<% content_for :title, "Editar proveedor" %>
+
+<h1>Editar proveedor</h1>
+
+<%= render "form", proveedor: @proveedor %>
+
+<div>
+  <%= link_to "Volver", proveedores_path, class: "btn btn-secondary" %>
+</div>

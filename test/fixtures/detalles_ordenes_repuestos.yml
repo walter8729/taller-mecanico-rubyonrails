@@ -1,0 +1,5 @@
+one:
+  orden_trabajo: one
+  repuesto: two
+  cantidad: 2
+  precio_unitario: 800.0

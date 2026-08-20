@@ -1,0 +1,217 @@
+<% content_for :title, "Orden N° #{@orden_trabajo.id}" %>
+
+<h1>Orden de trabajo N° <%= @orden_trabajo.id %></h1>
+
+<div class="acciones">
+  <%= badge_estado(@orden_trabajo.estado) %>
+  <%= link_to "Volver a órdenes", ordenes_trabajo_path, class: "btn" %>
+</div>
+
+<div class="grid-2">
+  <section class="tarjeta">
+    <h2>Datos del ingreso</h2>
+    <dl class="detalle">
+      <dt>Vehículo</dt>
+      <dd><%= @orden_trabajo.vehiculo.descripcion %></dd>
+      <dt>Cliente</dt>
+      <dd><%= @orden_trabajo.vehiculo.cliente.nombre_completo %></dd>
+      <dt>Bahía</dt>
+      <dd><%= @orden_trabajo.bahia.numero %></dd>
+      <dt>Fecha de ingreso</dt>
+      <dd><%= l(@orden_trabajo.fecha_ingreso) %> a las <%= @orden_trabajo.hora_ingreso.strftime("%H:%M") %></dd>
+      <dt>Kilometraje</dt>
+      <dd><%= @orden_trabajo.kilometraje_ingreso %> km</dd>
+      <dt>Motivo de ingreso</dt>
+      <dd><%= @orden_trabajo.motivo_ingreso %></dd>
+    </dl>
+  </section>
+
+  <section class="tarjeta">
+    <h2>Transiciones</h2>
+    <%= form_with(url: transicionar_orden_trabajo_path(@orden_trabajo), method: :post) do |form| %>
+      <div class="campo">
+        <%= form.label :nuevo_estado, "Avanzar a" %>
+        <%= form.select :nuevo_estado,
+            options_for_select(OrdenTrabajo::TRANSICIONES.keys.reject { |s| s == :cancelada }.map { |s| [ s.to_s.tr("_", " ").capitalize, s ] },
+              @orden_trabajo.estado),
+            {},
+            class: "input" %>
+      </div>
+      <%= form.submit "Transicionar", class: "btn btn-acento" %>
+    <% end %>
+
+    <p class="nota">Reglas: diagnóstico requiere recibida → en diagnóstico; reparación exige presupuesto aprobado; cancelación solo desde presupuestada.</p>
+  </section>
+</div>
+
+<section class="tarjeta">
+  <h2>Mecánicos asignados</h2>
+  <% if @orden_trabajo.ordenes_mecanicos.any? %>
+    <table>
+      <thead>
+        <tr>
+          <th>Mecánico</th>
+          <th>Especialidad</th>
+          <th>Rol</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orden_trabajo.ordenes_mecanicos.includes(:mecanico).each do |om| %>
+          <tr>
+            <td><%= om.mecanico.nombre_completo %></td>
+            <td><%= om.mecanico.especialidad&.nombre %></td>
+            <td><%= badge_estado(om.rol) %></td>
+            <td><%= button_to "Quitar", orden_trabajo_orden_mecanico_path(@orden_trabajo, om), method: :delete, data: { confirm: "¿Quitar a este mecánico?" }, class: "btn btn-peligro btn-sm" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>Sin mecánicos asignados.</p>
+  <% end %>
+
+  <%= form_with(model: [ @orden_trabajo, OrdenMecanico.new ], class: "form-inline") do |form| %>
+    <%= form.select :mecanico_id, Mecanico.activos.order(:apellido).map { |m| [ m.nombre_completo, m.id ] }, { prompt: "Seleccionar mecánico" }, class: "input" %>
+    <%= form.select :rol, { "Encargado" => "encargado", "Ayudante" => "ayudante" }, {}, class: "input" %>
+    <%= form.submit "Asignar", class: "btn btn-acento" %>
+  <% end %>
+</section>
+
+<section class="tarjeta">
+  <h2>Diagnóstico</h2>
+  <% if @orden_trabajo.diagnostico.present? %>
+    <dl class="detalle">
+      <dt>Fecha</dt>
+      <dd><%= l(@orden_trabajo.diagnostico.fecha) %></dd>
+      <dt>Descripción</dt>
+      <dd><%= @orden_trabajo.diagnostico.descripcion %></dd>
+      <dt>Observaciones</dt>
+      <dd><%= @orden_trabajo.diagnostico.observaciones.presence || "—" %></dd>
+      <dt>Estado</dt>
+      <dd><%= badge_estado(@orden_trabajo.diagnostico.estado) %></dd>
+    </dl>
+    <% if @orden_trabajo.diagnostico.registrado? %>
+      <div class="acciones">
+        <%= button_to "Validar diagnóstico", validar_orden_trabajo_diagnostico_path(@orden_trabajo), method: :post, class: "btn btn-acento" %>
+        <%= link_to "Editar", edit_orden_trabajo_diagnostico_path(@orden_trabajo), class: "btn" %>
+      </div>
+    <% end %>
+  <% elsif @orden_trabajo.en_diagnostico? %>
+    <%= link_to "Registrar diagnóstico", new_orden_trabajo_diagnostico_path(@orden_trabajo), class: "btn btn-acento" %>
+  <% else %>
+    <p>Sin diagnóstico registrado.</p>
+  <% end %>
+</section>
+
+<section class="tarjeta">
+  <h2>Presupuesto</h2>
+  <% if @orden_trabajo.presupuesto.present? %>
+    <dl class="detalle">
+      <dt>Fecha</dt>
+      <dd><%= l(@orden_trabajo.presupuesto.fecha) %></dd>
+      <dt>Monto estimado</dt>
+      <dd><%= number_to_currency(@orden_trabajo.presupuesto.monto_estimado || 0) %></dd>
+      <dt>Estado</dt>
+      <dd><%= badge_estado(@orden_trabajo.presupuesto.estado) %></dd>
+    </dl>
+    <% if @orden_trabajo.presupuesto.pendiente? %>
+      <div class="acciones">
+        <%= button_to "Aprobar", aprobar_orden_trabajo_presupuesto_path(@orden_trabajo), method: :post, class: "btn btn-exito" %>
+        <%= button_to "Rechazar", rechazar_orden_trabajo_presupuesto_path(@orden_trabajo), method: :post, class: "btn btn-peligro" %>
+        <%= link_to "Editar", edit_orden_trabajo_presupuesto_path(@orden_trabajo), class: "btn" %>
+      </div>
+    <% end %>
+  <% elsif @orden_trabajo.en_diagnostico? && @orden_trabajo.diagnostico&.validado? %>
+    <%= link_to "Generar presupuesto", new_orden_trabajo_presupuesto_path(@orden_trabajo), class: "btn btn-acento" %>
+  <% else %>
+    <p>Sin presupuesto generado.</p>
+  <% end %>
+</section>
+
+<div class="grid-2">
+  <section class="tarjeta">
+    <h2>Servicios</h2>
+    <% if @orden_trabajo.detalles_ordenes_servicios.any? %>
+      <table>
+        <thead>
+          <tr>
+            <th>Servicio</th>
+            <th>Mecánico</th>
+            <th>Precio</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @orden_trabajo.detalles_ordenes_servicios.includes(:servicio, :mecanico).each do |d| %>
+            <tr>
+              <td><%= d.servicio.nombre %></td>
+              <td><%= d.mecanico.nombre_completo %></td>
+              <td><%= number_to_currency(d.precio_aplicado) %></td>
+              <td><%= button_to "Quitar", orden_trabajo_detalle_orden_servicio_path(@orden_trabajo, d), method: :delete, data: { confirm: "¿Quitar este servicio?" }, class: "btn btn-peligro btn-sm" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+    <% if @orden_trabajo.aprobada? || @orden_trabajo.en_reparacion? %>
+      <%= form_with(model: [ @orden_trabajo, DetalleOrdenServicio.new ], class: "form-inline") do |form| %>
+        <%= form.select :servicio_id, Servicio.activos.order(:nombre).map { |s| [ s.nombre, s.id ] }, { prompt: "Seleccionar servicio" }, class: "input" %>
+        <%= form.select :mecanico_id, @orden_trabajo.mecanicos.order(:apellido).map { |m| [ m.nombre_completo, m.id ] }, { prompt: "Mecánico" }, class: "input" %>
+        <%= form.submit "Agregar", class: "btn btn-acento" %>
+      <% end %>
+    <% end %>
+  </section>
+
+  <section class="tarjeta">
+    <h2>Repuestos</h2>
+    <% if @orden_trabajo.detalles_ordenes_repuestos.any? %>
+      <table>
+        <thead>
+          <tr>
+            <th>Repuesto</th>
+            <th>Cant.</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @orden_trabajo.detalles_ordenes_repuestos.includes(:repuesto).each do |d| %>
+            <tr>
+              <td><%= d.repuesto.nombre %></td>
+              <td><%= d.cantidad %></td>
+              <td><%= number_to_currency(d.precio_unitario) %></td>
+              <td><%= number_to_currency(d.cantidad * d.precio_unitario) %></td>
+              <td><%= button_to "Quitar", orden_trabajo_detalle_orden_repuesto_path(@orden_trabajo, d), method: :delete, data: { confirm: "¿Quitar este repuesto?" }, class: "btn btn-peligro btn-sm" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+    <% if @orden_trabajo.aprobada? || @orden_trabajo.en_reparacion? %>
+      <%= form_with(model: [ @orden_trabajo, DetalleOrdenRepuesto.new ], class: "form-inline") do |form| %>
+        <%= form.select :repuesto_id, Repuesto.con_stock.order(:nombre).map { |r| [ "#{r.nombre} (stock: #{r.stock})", r.id ] }, { prompt: "Seleccionar repuesto" }, class: "input" %>
+        <%= form.number_field :cantidad, value: 1, min: 1, class: "input" %>
+        <%= form.submit "Agregar", class: "btn btn-acento" %>
+      <% end %>
+    <% end %>
+  </section>
+</div>
+
+<section class="tarjeta">
+  <h2>Total y factura</h2>
+  <p><strong>Total servicios:</strong> <%= number_to_currency(@orden_trabajo.total_servicios) %></p>
+  <p><strong>Total repuestos:</strong> <%= number_to_currency(@orden_trabajo.total_repuestos) %></p>
+  <p class="total"><strong>Total general:</strong> <%= number_to_currency(@orden_trabajo.total) %></p>
+
+  <% if @orden_trabajo.factura.present? %>
+    <div class="acciones">
+      <%= link_to "Ver factura", @orden_trabajo.factura, class: "btn" %>
+    </div>
+  <% elsif @orden_trabajo.finalizada? || @orden_trabajo.entregada? %>
+    <div class="acciones">
+      <%= link_to "Generar factura", new_factura_path(orden_trabajo_id: @orden_trabajo.id), class: "btn btn-exito" %>
+    </div>
+  <% end %>
+</section>

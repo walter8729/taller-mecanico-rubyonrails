@@ -1,0 +1,13 @@
+one:
+  nombre: Juan
+  apellido: Perez
+  telefono: 11111111
+  correo: juan@example.com
+  direccion: Calle 1
+
+two:
+  nombre: Maria
+  apellido: Gomez
+  telefono: 22222222
+  correo: maria@example.com
+  direccion: Calle 2

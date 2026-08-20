@@ -1,0 +1,25 @@
+<%= form_with(model: proveedor, class: "card") do |form| %>
+  <%= render "shared/errors", model: proveedor %>
+
+  <div class="field">
+    <%= form.label :nombre, "Nombre" %>
+    <%= form.text_field :nombre %>
+  </div>
+
+  <div class="field">
+    <%= form.label :telefono, "Teléfono" %>
+    <%= form.text_field :telefono %>
+  </div>
+
+  <div class="field">
+    <%= form.label :correo, "Correo" %>
+    <%= form.text_field :correo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :direccion, "Dirección" %>
+    <%= form.text_field :direccion %>
+  </div>
+
+  <%= form.submit class: "btn" %>
+<% end %>

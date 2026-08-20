@@ -1,0 +1,9 @@
+<% content_for :title, "Nuevo mecánico" %>
+
+<h1>Nuevo mecánico</h1>
+
+<%= render "form", mecanico: @mecanico %>
+
+<div>
+  <%= link_to "Volver", mecanicos_path, class: "btn btn-secondary" %>
+</div>

@@ -1,0 +1,5 @@
+one:
+  orden_trabajo: two
+  fecha: 2026-08-19
+  monto_estimado: 3300.0
+  estado: pendiente

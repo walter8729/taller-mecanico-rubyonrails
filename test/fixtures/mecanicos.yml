@@ -1,0 +1,13 @@
+one:
+  especialidad: one
+  nombre: Carlos
+  apellido: Lopez
+  telefono: 33333333
+  correo: carlos@example.com
+
+two:
+  especialidad: two
+  nombre: Pedro
+  apellido: Sanchez
+  telefono: 44444444
+  correo: pedro@example.com

@@ -1,0 +1,6 @@
+one:
+  orden_trabajo: two
+  fecha: 2026-08-19
+  descripcion: Requiere alineacion de las ruedas delanteras
+  observaciones: Se recomienda rotar neumaticos
+  estado: registrado

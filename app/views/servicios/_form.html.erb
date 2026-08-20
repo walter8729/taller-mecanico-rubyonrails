@@ -1,0 +1,20 @@
+<%= form_with(model: servicio, class: "card") do |form| %>
+  <%= render "shared/errors", model: servicio %>
+
+  <div class="field">
+    <%= form.label :nombre, "Nombre" %>
+    <%= form.text_field :nombre %>
+  </div>
+
+  <div class="field">
+    <%= form.label :descripcion, "Descripción" %>
+    <%= form.text_area :descripcion %>
+  </div>
+
+  <div class="field">
+    <%= form.label :precio_base, "Precio base" %>
+    <%= form.number_field :precio_base, step: "0.01", min: 0 %>
+  </div>
+
+  <%= form.submit class: "btn" %>
+<% end %>

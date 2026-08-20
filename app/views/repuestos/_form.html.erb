@@ -1,0 +1,35 @@
+<%= form_with(model: repuesto, class: "card") do |form| %>
+  <%= render "shared/errors", model: repuesto %>
+
+  <div class="field">
+    <%= form.label :proveedor_id, "Proveedor" %>
+    <%= form.collection_select :proveedor_id, Proveedor.activos.order(:nombre), :id, :nombre, { prompt: "Seleccione un proveedor" } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :nombre, "Nombre" %>
+    <%= form.text_field :nombre %>
+  </div>
+
+  <div class="field">
+    <%= form.label :marca, "Marca" %>
+    <%= form.text_field :marca %>
+  </div>
+
+  <div class="field">
+    <%= form.label :modelo_compatible, "Modelo compatible" %>
+    <%= form.text_field :modelo_compatible %>
+  </div>
+
+  <div class="field">
+    <%= form.label :precio, "Precio" %>
+    <%= form.number_field :precio, step: "0.01", min: 0 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :stock, "Stock" %>
+    <%= form.number_field :stock, min: 0 %>
+  </div>
+
+  <%= form.submit class: "btn" %>
+<% end %>

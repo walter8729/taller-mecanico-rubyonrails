@@ -1,0 +1,33 @@
+<% content_for :title, "Diagnóstico — Orden N° #{@orden_trabajo.id}" %>
+
+<h1>Diagnóstico — Orden N° <%= @orden_trabajo.id %></h1>
+
+<div class="acciones">
+  <%= badge_estado(@diagnostico.estado) %>
+  <%= link_to "Volver a la orden", @orden_trabajo, class: "btn" %>
+</div>
+
+<div class="grid-2">
+  <section class="tarjeta">
+    <dl class="detalle">
+      <dt>Fecha</dt>
+      <dd><%= l(@diagnostico.fecha) %></dd>
+      <dt>Descripción</dt>
+      <dd><%= @diagnostico.descripcion %></dd>
+      <dt>Observaciones</dt>
+      <dd><%= @diagnostico.observaciones.presence || "—" %></dd>
+    </dl>
+  </section>
+
+  <section class="tarjeta">
+    <h2>Acciones</h2>
+    <% if @diagnostico.registrado? %>
+      <div class="acciones">
+        <%= button_to "Validar diagnóstico", validar_orden_trabajo_diagnostico_path(@orden_trabajo), method: :post, class: "btn btn-acento" %>
+        <%= link_to "Editar", edit_orden_trabajo_diagnostico_path(@orden_trabajo), class: "btn" %>
+      </div>
+    <% else %>
+      <p class="nota">El diagnóstico ya fue validado y no puede modificarse.</p>
+    <% end %>
+  </section>
+</div>

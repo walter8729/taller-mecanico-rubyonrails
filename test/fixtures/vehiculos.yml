@@ -1,0 +1,17 @@
+one:
+  cliente: one
+  placa: ABC-123
+  marca: Toyota
+  modelo: Corolla
+  anio: 2018
+  color: Rojo
+  kilometraje: 45000
+
+two:
+  cliente: two
+  placa: XYZ-999
+  marca: Ford
+  modelo: Fiesta
+  anio: 2020
+  color: Azul
+  kilometraje: 30000

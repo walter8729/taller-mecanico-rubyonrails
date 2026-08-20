@@ -1,0 +1,17 @@
+one:
+  vehiculo: one
+  bahia: one
+  fecha_ingreso: 2026-08-18
+  hora_ingreso: "09:30:00"
+  kilometraje_ingreso: 45000
+  motivo_ingreso: Cambio de aceite
+  estado: recibida
+
+two:
+  vehiculo: two
+  bahia: two
+  fecha_ingreso: 2026-08-19
+  hora_ingreso: "10:00:00"
+  kilometraje_ingreso: 30000
+  motivo_ingreso: Alineacion y balanceo
+  estado: recibida

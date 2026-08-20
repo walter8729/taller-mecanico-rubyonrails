@@ -1,0 +1,9 @@
+one:
+  numero: 1
+  tipo: elevador
+  estado: disponible
+
+two:
+  numero: 2
+  tipo: fosa
+  estado: disponible

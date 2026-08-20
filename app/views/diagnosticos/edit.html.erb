@@ -1,0 +1,24 @@
+<% content_for :title, "Editar diagnóstico" %>
+
+<h1>Editar diagnóstico — Orden N° <%= @orden_trabajo.id %></h1>
+
+<%= render "shared/errors", model: @diagnostico %>
+
+<%= form_with(model: @diagnostico, url: orden_trabajo_diagnostico_path(@orden_trabajo), method: :patch, class: "formulario") do |form| %>
+  <div class="campo">
+    <%= form.label :fecha, "Fecha" %>
+    <%= form.date_field :fecha, class: "input" %>
+  </div>
+  <div class="campo">
+    <%= form.label :descripcion, "Descripción del diagnóstico" %>
+    <%= form.text_area :descripcion, rows: 4, class: "input" %>
+  </div>
+  <div class="campo">
+    <%= form.label :observaciones, "Observaciones" %>
+    <%= form.text_area :observaciones, rows: 3, class: "input" %>
+  </div>
+  <div class="acciones">
+    <%= form.submit "Guardar cambios", class: "btn btn-acento" %>
+    <%= link_to "Volver", @orden_trabajo, class: "btn" %>
+  </div>
+<% end %>

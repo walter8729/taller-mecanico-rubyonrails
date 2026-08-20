@@ -1,0 +1,68 @@
+<% content_for :title, "Factura N° #{@factura.id}" %>
+
+<h1>Factura N° <%= @factura.id %></h1>
+
+<div class="acciones">
+  <%= badge_estado(@factura.estado) %>
+  <%= link_to "Volver a facturas", facturas_path, class: "btn" %>
+  <%= link_to "Ver orden", @factura.orden_trabajo, class: "btn" %>
+</div>
+
+<section class="tarjeta">
+  <h2>Datos de la factura</h2>
+  <dl class="detalle">
+    <dt>Cliente</dt>
+    <dd><%= @factura.cliente.nombre_completo %></dd>
+    <dt>Orden de trabajo</dt>
+    <dd>OT N° <%= @factura.orden_trabajo_id %></dd>
+    <dt>Fecha</dt>
+    <dd><%= l(@factura.fecha) %></dd>
+    <dt>Estado</dt>
+    <dd><%= badge_estado(@factura.estado) %></dd>
+  </dl>
+</section>
+
+<section class="tarjeta">
+  <h2>Detalle</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Servicios</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @factura.orden_trabajo.detalles_ordenes_servicios.includes(:servicio).each do |d| %>
+        <tr>
+          <td><%= d.servicio.nombre %></td>
+          <td><%= number_to_currency(d.precio_aplicado) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <table>
+    <thead>
+      <tr>
+        <th>Repuestos</th>
+        <th>Cant.</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @factura.orden_trabajo.detalles_ordenes_repuestos.includes(:repuesto).each do |d| %>
+        <tr>
+          <td><%= d.repuesto.nombre %></td>
+          <td><%= d.cantidad %></td>
+          <td><%= number_to_currency(d.cantidad * d.precio_unitario) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <p class="total"><strong>Total a pagar:</strong> <%= number_to_currency(@factura.monto_total) %></p>
+
+  <% if @factura.pendiente? %>
+    <div class="acciones">
+      <%= button_to "Marcar como pagada", pagar_factura_path(@factura), method: :post, class: "btn btn-exito" %>
+    </div>
+  <% end %>
+</section>

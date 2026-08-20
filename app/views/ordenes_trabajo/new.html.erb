@@ -1,0 +1,38 @@
+<% content_for :title, "Nueva orden de trabajo" %>
+
+<h1>Nueva orden de trabajo</h1>
+
+<%= render "shared/errors", model: @orden_trabajo %>
+
+<%= form_with(model: @orden_trabajo, class: "formulario") do |form| %>
+  <div class="grid-2">
+    <div class="campo">
+      <%= form.label :vehiculo_id, "Vehículo" %>
+      <%= form.select :vehiculo_id, Vehiculo.activos.order(:placa).map { |v| [ v.descripcion, v.id ] }, { prompt: "Seleccionar vehículo" }, class: "input" %>
+    </div>
+    <div class="campo">
+      <%= form.label :bahia_id, "Bahía" %>
+      <%= form.select :bahia_id, Bahia.disponibles.map { |b| [ b.numero, b.id ] }, { prompt: "Seleccionar bahía" }, class: "input" %>
+    </div>
+    <div class="campo">
+      <%= form.label :fecha_ingreso, "Fecha de ingreso" %>
+      <%= form.date_field :fecha_ingreso, value: Date.today, class: "input" %>
+    </div>
+    <div class="campo">
+      <%= form.label :hora_ingreso, "Hora de ingreso" %>
+      <%= form.time_field :hora_ingreso, value: Time.current.strftime("%H:%M"), class: "input" %>
+    </div>
+    <div class="campo">
+      <%= form.label :kilometraje_ingreso, "Kilometraje" %>
+      <%= form.number_field :kilometraje_ingreso, min: 0, class: "input" %>
+    </div>
+    <div class="campo">
+      <%= form.label :motivo_ingreso, "Motivo de ingreso" %>
+      <%= form.text_field :motivo_ingreso, class: "input" %>
+    </div>
+  </div>
+  <div class="acciones">
+    <%= form.submit "Crear orden", class: "btn btn-acento" %>
+    <%= link_to "Cancelar", ordenes_trabajo_path, class: "btn" %>
+  </div>
+<% end %>

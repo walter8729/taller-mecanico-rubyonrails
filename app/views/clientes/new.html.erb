@@ -1,0 +1,9 @@
+<% content_for :title, "Nuevo cliente" %>
+
+<h1>Nuevo cliente</h1>
+
+<%= render "form", cliente: @cliente %>
+
+<div>
+  <%= link_to "Volver", clientes_path, class: "btn btn-secondary" %>
+</div>

@@ -1,0 +1,50 @@
+<h1>Panel del Taller Mecánico</h1>
+
+<div class="grid-2">
+  <div class="card">
+    <h2>Órdenes activas</h2>
+    <p class="total"><%= @ordenes_activas %></p>
+    <p><%= link_to "Ver órdenes", ordenes_trabajo_path, class: "btn" %></p>
+  </div>
+  <div class="card">
+    <h2>En reparación</h2>
+    <p class="total"><%= @ordenes_en_reparacion %></p>
+  </div>
+  <div class="card">
+    <h2>Bahías ocupadas</h2>
+    <p class="total"><%= @bahias_ocupadas %></p>
+  </div>
+  <div class="card">
+    <h2>Facturas pendientes</h2>
+    <p class="total"><%= @facturas_pendientes %></p>
+    <p><%= link_to "Ver facturas", facturas_path, class: "btn" %></p>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <h2>Clientes y vehículos</h2>
+    <p>Registro de clientes y de sus vehículos para abrir órdenes de trabajo.</p>
+    <p>
+      <%= link_to "Clientes", clientes_path, class: "btn" if admin? || recepcionista? %>
+      <%= link_to "Vehículos", vehiculos_path, class: "btn btn-secondary" if admin? || recepcionista? %>
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Administración</h2>
+    <p>Mecánicos, especialidades, bahías, servicios, proveedores y repuestos.</p>
+    <p>
+      <%= link_to "Mecánicos", mecanicos_path, class: "btn" if admin? %>
+      <%= link_to "Bahías", bahias_path, class: "btn btn-secondary" if admin? %>
+      <%= link_to "Repuestos", repuestos_path, class: "btn btn-secondary" if admin? || recepcionista? %>
+    </p>
+  </div>
+</div>
+
+<% if @repuestos_con_poco_stock > 0 %>
+  <div class="alert">
+    <strong>Stock bajo:</strong> <%= @repuestos_con_poco_stock %> repuestos con 3 o menos unidades.
+    <%= link_to "Revisar repuestos", repuestos_path %>
+  </div>
+<% end %>

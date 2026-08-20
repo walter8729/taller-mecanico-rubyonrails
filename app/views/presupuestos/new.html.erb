@@ -1,0 +1,21 @@
+<% content_for :title, "Generar presupuesto" %>
+
+<h1>Generar presupuesto — Orden N° <%= @orden_trabajo.id %></h1>
+
+<%= render "shared/errors", model: @presupuesto %>
+
+<%= form_with(model: @presupuesto, url: orden_trabajo_presupuesto_path(@orden_trabajo), class: "formulario") do |form| %>
+  <div class="campo">
+    <%= form.label :fecha, "Fecha" %>
+    <%= form.date_field :fecha, value: Date.today, class: "input" %>
+  </div>
+  <div class="campo">
+    <%= form.label :monto_estimado, "Monto estimado" %>
+    <%= form.number_field :monto_estimado, step: "0.01", min: 0, class: "input" %>
+  </div>
+  <p class="nota">El monto puede completarse tras agregar servicios y repuestos.</p>
+  <div class="acciones">
+    <%= form.submit "Generar presupuesto", class: "btn btn-acento" %>
+    <%= link_to "Volver", @orden_trabajo, class: "btn" %>
+  </div>
+<% end %>

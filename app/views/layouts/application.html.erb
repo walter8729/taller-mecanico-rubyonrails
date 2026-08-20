@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Taller Mecánico" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Taller Mecánico">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <header class="nav">
+      <%= link_to "Taller Mecánico", root_path, class: "brand" %>
+      <% if authenticated? %>
+        <nav>
+          <%= link_to "Inicio", root_path %>
+          <%= link_to "Clientes", clientes_path if (admin? || recepcionista?) && respond_to?(:clientes_path) %>
+          <%= link_to "Vehículos", vehiculos_path if (admin? || recepcionista?) && respond_to?(:vehiculos_path) %>
+          <%= link_to "Órdenes", ordenes_trabajo_path if respond_to?(:ordenes_trabajo_path) %>
+          <%= link_to "Mecánicos", mecanicos_path if admin? && respond_to?(:mecanicos_path) %>
+          <%= link_to "Bahías", bahias_path if admin? && respond_to?(:bahias_path) %>
+          <%= link_to "Repuestos", repuestos_path if (admin? || recepcionista?) && respond_to?(:repuestos_path) %>
+          <%= link_to "Facturas", facturas_path if (admin? || recepcionista?) && respond_to?(:facturas_path) %>
+        </nav>
+        <span class="user-info">
+          <%= current_user.email_address %> · <%= current_user.rol.humanize %>
+          <%= link_to "Salir", session_path, data: { turbo_method: :delete }, class: "btn btn-sm" %>
+        </span>
+      <% end %>
+    </header>
+
+    <main class="container">
+      <% if flash[:notice] %>
+        <div class="notice"><%= flash[:notice] %></div>
+      <% end %>
+      <% if flash[:alert] %>
+        <div class="alert"><%= flash[:alert] %></div>
+      <% end %>
+      <%= yield %>
+    </main>
+  </body>
+</html>

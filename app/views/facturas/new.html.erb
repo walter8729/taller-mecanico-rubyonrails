@@ -1,0 +1,24 @@
+<% content_for :title, "Nueva factura" %>
+
+<h1>Nueva factura</h1>
+
+<%= render "shared/errors", model: @factura %>
+
+<%= form_with(model: @factura, class: "formulario") do |form| %>
+  <div class="campo">
+    <%= form.label :orden_trabajo_id, "Orden de trabajo" %>
+    <%= form.select :orden_trabajo_id,
+        OrdenTrabajo.where(estado: [ :finalizada, :entregada ]).order(:id).map { |o| [ "OT N° #{o.id} — #{o.vehiculo.descripcion}", o.id ] },
+        { prompt: "Seleccionar orden finalizada/entregada" },
+        class: "input" %>
+  </div>
+  <div class="campo">
+    <%= form.label :fecha, "Fecha" %>
+    <%= form.date_field :fecha, value: Date.today, class: "input" %>
+  </div>
+  <p class="nota">El monto total se calcula automáticamente desde los servicios y repuestos de la orden.</p>
+  <div class="acciones">
+    <%= form.submit "Generar factura", class: "btn btn-exito" %>
+    <%= link_to "Cancelar", facturas_path, class: "btn" %>
+  </div>
+<% end %>

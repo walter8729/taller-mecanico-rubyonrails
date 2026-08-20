@@ -1,0 +1,9 @@
+<% content_for :title, "Editar repuesto" %>
+
+<h1>Editar repuesto</h1>
+
+<%= render "form", repuesto: @repuesto %>
+
+<div>
+  <%= link_to "Volver", repuestos_path, class: "btn btn-secondary" %>
+</div>

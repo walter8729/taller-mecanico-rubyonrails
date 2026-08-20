@@ -1,0 +1,32 @@
+<% content_for :title, "Presupuesto — Orden N° #{@orden_trabajo.id}" %>
+
+<h1>Presupuesto — Orden N° <%= @orden_trabajo.id %></h1>
+
+<div class="acciones">
+  <%= badge_estado(@presupuesto.estado) %>
+  <%= link_to "Volver a la orden", @orden_trabajo, class: "btn" %>
+</div>
+
+<div class="grid-2">
+  <section class="tarjeta">
+    <dl class="detalle">
+      <dt>Fecha</dt>
+      <dd><%= l(@presupuesto.fecha) %></dd>
+      <dt>Monto estimado</dt>
+      <dd class="total"><%= number_to_currency(@presupuesto.monto_estimado) %></dd>
+    </dl>
+  </section>
+
+  <section class="tarjeta">
+    <h2>Acciones</h2>
+    <% if @presupuesto.pendiente? %>
+      <div class="acciones">
+        <%= button_to "Aprobar", aprobar_orden_trabajo_presupuesto_path(@orden_trabajo), method: :post, class: "btn btn-exito" %>
+        <%= button_to "Rechazar", rechazar_orden_trabajo_presupuesto_path(@orden_trabajo), method: :post, class: "btn btn-peligro" %>
+        <%= link_to "Editar", edit_orden_trabajo_presupuesto_path(@orden_trabajo), class: "btn" %>
+      </div>
+    <% else %>
+      <p class="nota">El presupuesto ya fue decidido y no puede modificarse.</p>
+    <% end %>
+  </section>
+</div>

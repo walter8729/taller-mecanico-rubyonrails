@@ -1,0 +1,9 @@
+<% content_for :title, "Editar servicio" %>
+
+<h1>Editar servicio</h1>
+
+<%= render "form", servicio: @servicio %>
+
+<div>
+  <%= link_to "Volver", servicios_path, class: "btn btn-secondary" %>
+</div>

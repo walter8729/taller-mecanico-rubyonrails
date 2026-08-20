@@ -1,0 +1,18 @@
+<% content_for :title, "Repuesto" %>
+
+<h1><%= @repuesto.nombre %></h1>
+
+<div class="card">
+  <p><strong>Nombre:</strong> <%= @repuesto.nombre %></p>
+  <p><strong>Proveedor:</strong> <%= @repuesto.proveedor&.nombre %></p>
+  <p><strong>Marca:</strong> <%= @repuesto.marca %></p>
+  <p><strong>Modelo compatible:</strong> <%= @repuesto.modelo_compatible %></p>
+  <p><strong>Precio:</strong> <%= number_to_currency(@repuesto.precio) %></p>
+  <p><strong>Stock:</strong> <%= @repuesto.stock %></p>
+  <p><strong>Estado:</strong> <%= badge_estado(@repuesto.estado) %></p>
+</div>
+
+<div class="acciones">
+  <%= link_to "Editar", edit_repuesto_path(@repuesto), class: "btn" %>
+  <%= link_to "Volver", repuestos_path, class: "btn btn-secondary" %>
+</div>

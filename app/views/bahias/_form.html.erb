@@ -1,0 +1,20 @@
+<%= form_with(model: bahia, class: "card") do |form| %>
+  <%= render "shared/errors", model: bahia %>
+
+  <div class="field">
+    <%= form.label :numero, "Número" %>
+    <%= form.number_field :numero %>
+  </div>
+
+  <div class="field">
+    <%= form.label :tipo, "Tipo" %>
+    <%= form.select :tipo, Bahia.tipos.keys.map { |t| [ t.humanize, t ] } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :estado, "Estado" %>
+    <%= form.select :estado, Bahia.estados.keys.map { |e| [ e.humanize, e ] } %>
+  </div>
+
+  <%= form.submit class: "btn" %>
+<% end %>

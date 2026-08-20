@@ -1,0 +1,17 @@
+<h1>Iniciar sesión</h1>
+
+<%= form_with url: session_path, class: "card" do |form| %>
+  <div class="field">
+    <%= form.label :email_address, "Correo electrónico" %>
+    <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "usuario@taller.local", value: params[:email_address] %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password, "Contraseña" %>
+    <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Contraseña", maxlength: 72 %>
+  </div>
+
+  <%= form.submit "Ingresar", class: "btn" %>
+<% end %>
+
+<p><%= link_to "¿Olvidaste tu contraseña?", new_password_path %></p>

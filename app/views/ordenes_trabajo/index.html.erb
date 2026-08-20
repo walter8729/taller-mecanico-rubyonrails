@@ -1,0 +1,59 @@
+<% content_for :title, "Órdenes de trabajo" %>
+
+<h1>Órdenes de trabajo</h1>
+
+<div class="acciones">
+  <%= link_to "Nueva orden", new_orden_trabajo_path, class: "btn btn-acento" %>
+</div>
+
+<h2>Órdenes activas</h2>
+<table>
+  <thead>
+    <tr>
+      <th>N°</th>
+      <th>Vehículo</th>
+      <th>Cliente</th>
+      <th>Bahía</th>
+      <th>Ingreso</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @activas.each do |orden| %>
+      <tr>
+        <td><%= link_to orden.id, orden %></td>
+        <td><%= orden.vehiculo.descripcion %></td>
+        <td><%= orden.vehiculo.cliente.nombre_completo %></td>
+        <td><%= orden.bahia.numero %></td>
+        <td><%= l(orden.fecha_ingreso) %> <%= orden.hora_ingreso.strftime("%H:%M") %></td>
+        <td><%= badge_estado(orden.estado) %></td>
+        <td><%= link_to "Ver", orden, class: "btn btn-sm" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Órdenes finalizadas y canceladas</h2>
+<table>
+  <thead>
+    <tr>
+      <th>N°</th>
+      <th>Vehículo</th>
+      <th>Ingreso</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @finalizadas.each do |orden| %>
+      <tr>
+        <td><%= link_to orden.id, orden %></td>
+        <td><%= orden.vehiculo.descripcion %></td>
+        <td><%= l(orden.fecha_ingreso) %></td>
+        <td><%= badge_estado(orden.estado) %></td>
+        <td><%= link_to "Ver", orden, class: "btn btn-sm" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

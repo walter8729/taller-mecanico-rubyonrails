@@ -1,0 +1,17 @@
+<% content_for :title, "Mecánico" %>
+
+<h1><%= @mecanico.nombre_completo %></h1>
+
+<div class="card">
+  <p><strong>Nombre:</strong> <%= @mecanico.nombre %></p>
+  <p><strong>Apellido:</strong> <%= @mecanico.apellido %></p>
+  <p><strong>Teléfono:</strong> <%= @mecanico.telefono %></p>
+  <p><strong>Correo:</strong> <%= @mecanico.correo %></p>
+  <p><strong>Especialidad:</strong> <%= @mecanico.especialidad&.nombre %></p>
+  <p><strong>Estado:</strong> <%= badge_estado(@mecanico.estado) %></p>
+</div>
+
+<div class="acciones">
+  <%= link_to "Editar", edit_mecanico_path(@mecanico), class: "btn" %>
+  <%= link_to "Volver", mecanicos_path, class: "btn btn-secondary" %>
+</div>

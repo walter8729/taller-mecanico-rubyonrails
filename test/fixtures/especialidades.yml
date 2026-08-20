@@ -1,0 +1,7 @@
+one:
+  nombre: Mecanica general
+  descripcion: Servicios generales de taller
+
+two:
+  nombre: Electricidad
+  descripcion: Sistemas electricos del vehiculo

@@ -1,0 +1,33 @@
+<% content_for :title, "Proveedores" %>
+
+<h1>Proveedores</h1>
+
+<div class="acciones">
+  <%= link_to "Nuevo proveedor", new_proveedor_path, class: "btn btn-acento" %>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Teléfono</th>
+      <th>Correo</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @proveedores.each do |proveedor| %>
+      <tr>
+        <td><%= link_to proveedor.nombre, proveedor %></td>
+        <td><%= proveedor.telefono %></td>
+        <td><%= proveedor.correo %></td>
+        <td><%= badge_estado(proveedor.estado) %></td>
+        <td class="acciones">
+          <%= link_to "Editar", edit_proveedor_path(proveedor), class: "btn btn-sm btn-secondary" %>
+          <%= button_to "Eliminar", proveedor, method: :delete, class: "btn btn-sm btn-peligro", form: { style: "display:inline" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

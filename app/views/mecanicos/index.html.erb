@@ -1,0 +1,35 @@
+<% content_for :title, "Mecánicos" %>
+
+<h1>Mecánicos</h1>
+
+<div class="acciones">
+  <%= link_to "Nuevo mecánico", new_mecanico_path, class: "btn btn-acento" %>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Teléfono</th>
+      <th>Correo</th>
+      <th>Especialidad</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @mecanicos.each do |mecanico| %>
+      <tr>
+        <td><%= link_to mecanico.nombre_completo, mecanico %></td>
+        <td><%= mecanico.telefono %></td>
+        <td><%= mecanico.correo %></td>
+        <td><%= mecanico.especialidad&.nombre %></td>
+        <td><%= badge_estado(mecanico.estado) %></td>
+        <td class="acciones">
+          <%= link_to "Editar", edit_mecanico_path(mecanico), class: "btn btn-sm btn-secondary" %>
+          <%= button_to "Eliminar", mecanico, method: :delete, class: "btn btn-sm btn-peligro", form: { style: "display:inline" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

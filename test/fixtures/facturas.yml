@@ -1,0 +1,6 @@
+one:
+  cliente: one
+  orden_trabajo: one
+  fecha: 2026-08-19
+  monto_total: 1500.0
+  estado: pagada

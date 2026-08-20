@@ -1,0 +1,14 @@
+<% content_for :title, "Especialidad" %>
+
+<h1><%= @especialidad.nombre %></h1>
+
+<div class="card">
+  <p><strong>Nombre:</strong> <%= @especialidad.nombre %></p>
+  <p><strong>Descripción:</strong> <%= @especialidad.descripcion %></p>
+  <p><strong>Estado:</strong> <%= badge_estado(@especialidad.estado) %></p>
+</div>
+
+<div class="acciones">
+  <%= link_to "Editar", edit_especialidad_path(@especialidad), class: "btn" %>
+  <%= link_to "Volver", especialidades_path, class: "btn btn-secondary" %>
+</div>
